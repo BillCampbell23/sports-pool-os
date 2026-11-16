@@ -27,20 +27,20 @@ Do **not** run `0002_cron.sql` yet — it needs your deployed URL, which you get
 
 ## 3. Seed your pool
 
-One query. Replace the name if you like; the rest is already your configuration.
+One query. Swap in your own pool name, buy-in and Cash App tag.
 
 ```sql
 -- The pool. buy_in_cents is 1000 = $10/week.
 insert into pools (name, season, buy_in_cents, settings)
 values (
-  'Sunday Money',
+  'My Pool',
   2026,
   1000,
   jsonb_build_object(
     'autopick_enabled', true,
     'provider', 'espn',
     'timezone', 'America/Chicago',
-    'cashtag', '$Lafaze2009'
+    'cashtag', '$yourcashtag'
   )
 )
 returning id;
@@ -52,8 +52,8 @@ Then add yourself as commissioner, using the id that came back:
 insert into players (pool_id, name, email, magic_token, is_commissioner)
 values (
   '<paste the pool id>',
-  'Bill',
-  'optimusdigitalsuite@gmail.com',
+  'Your Name',
+  'you@example.com',
   -- URL-safe base64: this token goes in a URL path, so the '+', '/' and '='
   -- of standard base64 would break the route. Matches the app's own generator.
   translate(encode(gen_random_bytes(32), 'base64'), '+/=', '-_'),
@@ -71,7 +71,7 @@ You do not need to create a `weeks` row. The scorekeeper bootstraps week 1 on it
 **Resend** ([resend.com](https://resend.com)) — create an API key, and verify a sending domain. Until a domain is verified, mail will not send; the app handles that honestly (it falls back to a no-op channel and reports it) but nobody gets nagged.
 
 - `RESEND_API_KEY` — the key
-- `RESEND_FROM` — an address at your verified domain, e.g. `pool@optimusdigitalsuite.com`
+- `RESEND_FROM` — an address at your verified domain, e.g. `pool@yourdomain.com`
 
 **Anthropic** — an API key for the weekly recap. `ANTHROPIC_API_KEY` is read by the SDK itself, not by our code, which is why it does not appear in a grep for `process.env`. Without it the recap degrades to a plain stats summary and everything else runs normally.
 
@@ -87,7 +87,7 @@ vercel --prod --yes --archive=tgz
 
 Two things this repo has bitten on before:
 
-- Vercel refuses the deploy unless the commit email is `optimusdigitalsuite@gmail.com`.
+- Vercel refuses the deploy unless the commit author email matches your Vercel account.
 - `--archive=tgz` is required — Windows blocks the prebuilt symlink path.
 
 Set every variable in **Vercel → Settings → Environment Variables** (Production), then redeploy so they take effect:
