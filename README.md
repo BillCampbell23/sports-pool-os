@@ -1,6 +1,6 @@
 # Sports Pool OS
 
-[![tests](https://github.com/OptimusDigitalSuite/sports-pool-os/actions/workflows/test.yml/badge.svg)](https://github.com/OptimusDigitalSuite/sports-pool-os/actions/workflows/test.yml)
+[![tests](https://github.com/BillCampbell23/sports-pool-os/actions/workflows/test.yml/badge.svg)](https://github.com/BillCampbell23/sports-pool-os/actions/workflows/test.yml)
 
 **Live app:** https://sports-pool-os.vercel.app
 
@@ -45,7 +45,7 @@ It runs a real weekly pool for my own group.
 ## Getting started
 
 ```bash
-git clone https://github.com/OptimusDigitalSuite/sports-pool-os.git
+git clone https://github.com/BillCampbell23/sports-pool-os.git
 cd sports-pool-os
 npm ci
 ```
